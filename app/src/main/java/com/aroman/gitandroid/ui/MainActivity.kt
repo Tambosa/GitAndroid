@@ -1,4 +1,4 @@
-package com.aroman.gitandroid
+package com.aroman.gitandroid.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,7 +7,6 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.marginBottom
 import com.aroman.gitandroid.data.GitRetrofitImpl
 import com.aroman.gitandroid.databinding.ActivityMainBinding
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
@@ -24,9 +23,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initHardcodedUserList()
-
-        doTestRequest()
-
     }
 
     private fun initHardcodedUserList() {
@@ -71,39 +67,22 @@ class MainActivity : AppCompatActivity() {
             initUserDetailsFragment(user1.text.toString())
         }
         user2.setOnClickListener {
-            initUserDetailsFragment(user1.text.toString())
+            initUserDetailsFragment(user2.text.toString())
         }
         user3.setOnClickListener {
-            initUserDetailsFragment(user1.text.toString())
+            initUserDetailsFragment(user3.text.toString())
         }
         user4.setOnClickListener {
-            initUserDetailsFragment(user1.text.toString())
+            initUserDetailsFragment(user4.text.toString())
         }
 
     }
 
     private fun initUserDetailsFragment(userName: String) {
-        //init fragment
         Log.d("@@@", "initUserDetailsFragment: $userName")
+        supportFragmentManager.beginTransaction()
+            .add(binding.llMainLayout.id, UserDetailsFragment.newInstance(userName))
+            .addToBackStack("")
+            .commit()
     }
-
-    private val retrofitImpl: GitRetrofitImpl = GitRetrofitImpl()
-
-    private fun doTestRequest() {
-        retrofitImpl.getGitRetrofitImpl().listRepos("tambosa").enqueue(
-            object : Callback<List<GitServerResponseData>> {
-                override fun onResponse(
-                    call: Call<List<GitServerResponseData>>,
-                    response: Response<List<GitServerResponseData>>
-                ) {
-                    Log.d("@@@", "onResponse: ${response.body()}")
-                }
-
-                override fun onFailure(call: Call<List<GitServerResponseData>>, t: Throwable) {
-                    Log.d("@@@", "onFailure: ${t.message}")
-                }
-            }
-        )
-    }
-
 }
