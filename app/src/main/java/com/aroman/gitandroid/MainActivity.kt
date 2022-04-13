@@ -3,6 +3,11 @@ package com.aroman.gitandroid
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.view.marginBottom
 import com.aroman.gitandroid.data.GitRetrofitImpl
 import com.aroman.gitandroid.databinding.ActivityMainBinding
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
@@ -18,6 +23,73 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initHardcodedUserList()
+
+        doTestRequest()
+
+    }
+
+    private fun initHardcodedUserList() {
+        val params = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+            )
+        )
+        params.weight = 1f
+        val user1 = TextView(this).apply {
+            text = "tambosa"
+            textSize = 40f
+            gravity = Gravity.CENTER
+            layoutParams = params
+        }
+        val user2 = TextView(this).apply {
+            text = "borhammere"
+            textSize = 40f
+            gravity = Gravity.CENTER
+            layoutParams = params
+        }
+        val user3 = TextView(this).apply {
+            text = "JakeWharton"
+            textSize = 40f
+            gravity = Gravity.CENTER
+            layoutParams = params
+        }
+        val user4 = TextView(this).apply {
+            text = "fabpot"
+            textSize = 40f
+            gravity = Gravity.CENTER
+            layoutParams = params
+        }
+
+        binding.llMainLayout.addView(user1)
+        binding.llMainLayout.addView(user2)
+        binding.llMainLayout.addView(user3)
+        binding.llMainLayout.addView(user4)
+
+        user1.setOnClickListener {
+            initUserDetailsFragment(user1.text.toString())
+        }
+        user2.setOnClickListener {
+            initUserDetailsFragment(user1.text.toString())
+        }
+        user3.setOnClickListener {
+            initUserDetailsFragment(user1.text.toString())
+        }
+        user4.setOnClickListener {
+            initUserDetailsFragment(user1.text.toString())
+        }
+
+    }
+
+    private fun initUserDetailsFragment(userName: String) {
+        //init fragment
+        Log.d("@@@", "initUserDetailsFragment: $userName")
+    }
+
+    private val retrofitImpl: GitRetrofitImpl = GitRetrofitImpl()
+
+    private fun doTestRequest() {
         retrofitImpl.getGitRetrofitImpl().listRepos("tambosa").enqueue(
             object : Callback<List<GitServerResponseData>> {
                 override fun onResponse(
@@ -31,9 +103,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d("@@@", "onFailure: ${t.message}")
                 }
             }
-
         )
     }
 
-    private val retrofitImpl: GitRetrofitImpl = GitRetrofitImpl()
 }
