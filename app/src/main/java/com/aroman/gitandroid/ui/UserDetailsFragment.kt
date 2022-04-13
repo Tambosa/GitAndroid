@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.aroman.gitandroid.app
 import com.aroman.gitandroid.data.GitRetrofitImpl
 import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
@@ -21,7 +22,7 @@ private const val LOGIN = "login"
 class UserDetailsFragment() : Fragment() {
     private var login = "login"
     private lateinit var binding: FragmentUserDetailsBinding
-    private val viewModel: UserDetailsViewModel by lazy { UserDetailsViewModel(GitRetrofitImpl()) }
+    private lateinit var viewModel: UserDetailsViewModel
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +30,12 @@ class UserDetailsFragment() : Fragment() {
         arguments?.let {
             login = it.getString(LOGIN)!!
         }
+        viewModel = restoreViewModel()
+    }
+
+    private fun restoreViewModel(): UserDetailsViewModel {
+        val viewModel = requireActivity().lastCustomNonConfigurationInstance as? UserDetailsViewModel
+        return viewModel ?: UserDetailsViewModel(requireActivity().app.retrofitImpl)
     }
 
     override fun onCreateView(
