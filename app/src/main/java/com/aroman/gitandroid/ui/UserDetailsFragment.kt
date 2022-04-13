@@ -72,4 +72,9 @@ class UserDetailsFragment() : Fragment() {
                 }
             }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.data.unsubscribeAll()
+    }
 }
