@@ -10,16 +10,16 @@
         android:id="@+id/login_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="@dimen/login_text_view_padding"
         android:text="@string/login"
         android:textAlignment="center"
-        android:textSize="40sp" />
+        android:textSize="@dimen/login_text_view_size" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/avatar_image_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="100dp" />
+        android:minHeight="@dimen/avatar_min_height" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,7 +29,6 @@
             android:id="@+id/ll_repo_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="400dp"
             android:orientation="vertical" />
     </ScrollView>
 </LinearLayout>

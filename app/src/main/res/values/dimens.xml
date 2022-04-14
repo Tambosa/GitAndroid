@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="login_text_view_padding">10dp</dimen>
+    <dimen name="login_text_view_size">40sp</dimen>
+    <dimen name="avatar_min_height">100dp</dimen>
+</resources>
