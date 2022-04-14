@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.aroman.gitandroid.app
-import com.aroman.gitandroid.data.GitRetrofitImpl
 import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
 import com.squareup.picasso.Picasso
@@ -35,7 +34,7 @@ class UserDetailsFragment() : Fragment() {
 
     private fun restoreViewModel(): UserDetailsViewModel {
         val viewModel = requireActivity().lastCustomNonConfigurationInstance as? UserDetailsViewModel
-        return viewModel ?: UserDetailsViewModel(requireActivity().app.retrofitImpl)
+        return viewModel ?: UserDetailsViewModel(requireActivity().app.retrofitImpl, requireActivity().app.userLocalRepo)
     }
 
     override fun onCreateView(
