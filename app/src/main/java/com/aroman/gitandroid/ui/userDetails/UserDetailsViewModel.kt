@@ -1,5 +1,6 @@
 package com.aroman.gitandroid.ui.userDetails
 
+import android.util.Log
 import com.aroman.gitandroid.data.GitRepo
 import com.aroman.gitandroid.data.UserLocalRepo
 import com.aroman.gitandroid.domain.entities.DbUsers
@@ -21,19 +22,24 @@ class UserDetailsViewModel(
         //userLocalRepo.clearDb()
 
         compositeDisposable.add(
-            repository.getListRepos(login).subscribeBy {
-                repos.post(it)
-//                for (repo in repos as List<GitServerResponseData>) {
-//                    userLocalRepo.insertUser(
-//                        DbUsers(
-//                            login = repo.owner.login,
-//                            avatarUrl = repo.owner.avatarUrl,
-//                            repoName = repo.repoName,
-//                            repoLink = repo.repoHtmlUrl
-//                        )
-//                    )
-//                }
-            })
+            repository.getListRepos(login).subscribeBy(
+                onSuccess = { response ->
+                    repos.post(response)
+                    for (repo in response) {
+                        userLocalRepo.insertUser(
+                            DbUsers(
+                                login = repo.owner.login,
+                                avatarUrl = repo.owner.avatarUrl,
+                                repoName = repo.repoName,
+                                repoLink = repo.repoHtmlUrl
+                            )
+                        )
+                    }
+                },
+                onError = {
+                    Log.d("@@@", "Error: ${it.message}")
+                })
+        )
     }
 
     fun unSubscribeDisposable() {
