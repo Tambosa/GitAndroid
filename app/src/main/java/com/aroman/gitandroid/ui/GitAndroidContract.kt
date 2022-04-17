@@ -6,7 +6,7 @@ import com.aroman.gitandroid.utils.Publisher
 
 class GitAndroidContract {
     interface UserDetailsViewModel {
-        val data: Publisher<GitServerResponseData>
+        val repos: Publisher<GitServerResponseData>
 
         @MainThread
         fun getUser(login: String)

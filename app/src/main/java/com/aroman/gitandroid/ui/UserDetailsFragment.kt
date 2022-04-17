@@ -33,8 +33,12 @@ class UserDetailsFragment() : Fragment() {
     }
 
     private fun restoreViewModel(): UserDetailsViewModel {
-        val viewModel = requireActivity().lastCustomNonConfigurationInstance as? UserDetailsViewModel
-        return viewModel ?: UserDetailsViewModel(requireActivity().app.retrofitImpl, requireActivity().app.userLocalRepo)
+        val viewModel =
+            requireActivity().lastCustomNonConfigurationInstance as? UserDetailsViewModel
+        return viewModel ?: UserDetailsViewModel(
+            requireActivity().app.gitRepo,
+            requireActivity().app.userLocalRepo
+        )
     }
 
     override fun onCreateView(
@@ -49,7 +53,7 @@ class UserDetailsFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.loginTextView.text = login
 
-        viewModel.data.subscribe(handler) { repo ->
+        viewModel.repos.subscribe(handler) { repo ->
             Picasso.get().load(repo?.owner?.avatarUrl).into(binding.avatarImageView)
             initRepoList(repo)
         }
@@ -81,6 +85,7 @@ class UserDetailsFragment() : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.data.unsubscribeAll()
+        viewModel.repos.unsubscribeAll()
+        viewModel.unSubscribeDisposable()
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.aroman.gitandroid.domain.DbUserDao
 import com.aroman.gitandroid.domain.entities.DbUsers
 
 @Database(entities = [DbUsers::class], version = 2, exportSchema = false)
