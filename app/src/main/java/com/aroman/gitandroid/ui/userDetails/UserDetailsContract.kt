@@ -9,6 +9,6 @@ class UserDetailsContract {
         val repos: Publisher<List<GitServerResponseData>>
 
         @MainThread
-        fun getUser(login: String)
+        fun getUser(isOnline: Boolean, login: String)
     }
 }

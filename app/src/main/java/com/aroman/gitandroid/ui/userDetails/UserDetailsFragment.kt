@@ -1,5 +1,8 @@
 package com.aroman.gitandroid.ui.userDetails
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -77,16 +80,23 @@ class UserDetailsFragment : Fragment() {
             avatarUrl = newRepos!![0].owner.avatarUrl
             initRecyclerView(newRepos)
         }
+
         if (repoList.isNullOrEmpty()) {
-            Log.d("@@@", "Fragment onViewCreated: fetch data online")
-            viewModel.getUser(login)
+            Log.d("@@@", "Fragment onViewCreated: fetch data from ViewModel")
+            viewModel.getUser(isOnline(), login)
         } else {
             Log.d("@@@", "Fragment onViewCreated: restore instance state")
             initRecyclerView(repoList)
         }
     }
 
-    private fun initRecyclerView(repos :List<GitServerResponseData>) {
+    private fun isOnline(): Boolean {
+        val connectivityManager =
+            context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork) != null
+    }
+
+    private fun initRecyclerView(repos: List<GitServerResponseData>) {
         Picasso.get().load(avatarUrl).into(binding.avatarImageView)
         repoList.addAll(repos)
         DiffUtil
