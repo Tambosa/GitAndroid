@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.DiffUtil
 import com.aroman.gitandroid.app
 import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
+import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsAdapter
+import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsDiffUtilCallback
 import com.squareup.picasso.Picasso
 
 private const val LOGIN = "login"

@@ -1,4 +1,4 @@
-package com.aroman.gitandroid.ui.userDetails
+package com.aroman.gitandroid.ui.userDetails.recyclerView
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

@@ -1,4 +1,4 @@
-package com.aroman.gitandroid.ui.userDetails
+package com.aroman.gitandroid.ui.userDetails.recyclerView
 
 import android.text.Html
 import android.text.method.LinkMovementMethod

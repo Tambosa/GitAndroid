@@ -1,4 +1,4 @@
-package com.aroman.gitandroid.ui.userDetails
+package com.aroman.gitandroid.ui.userDetails.recyclerView
 
 import androidx.recyclerview.widget.DiffUtil
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
