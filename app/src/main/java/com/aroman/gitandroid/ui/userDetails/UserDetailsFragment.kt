@@ -3,6 +3,7 @@ package com.aroman.gitandroid.ui.userDetails
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +17,13 @@ import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsDiffUtilCall
 import com.squareup.picasso.Picasso
 
 private const val LOGIN = "login"
+private const val REPO_LIST = "repo_list"
+private const val AVATAR_URL = "avatar_url"
 
 class UserDetailsFragment : Fragment() {
     private var login = "login"
-    private val repoList: MutableList<GitServerResponseData> = ArrayList()
+    private var repoList: ArrayList<GitServerResponseData> = ArrayList()
+    private var avatarUrl = ""
 
     private lateinit var binding: FragmentUserDetailsBinding
     private lateinit var viewModel: UserDetailsViewModel
@@ -28,10 +32,24 @@ class UserDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            login = it.getString(LOGIN)!!
+        arguments?.let { bundle ->
+            login = bundle.getString(LOGIN)!!
         }
+
         viewModel = restoreViewModel()
+        avatarUrl = savedInstanceState?.getString(AVATAR_URL).toString()
+        val tempList = savedInstanceState?.getParcelableArrayList<GitServerResponseData>(REPO_LIST)
+        if (tempList != null) {
+            for (item in tempList) {
+                repoList.add(item as GitServerResponseData)
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList(REPO_LIST, repoList)
+        outState.putString(AVATAR_URL, repoList[0].owner.avatarUrl)
     }
 
     private fun restoreViewModel(): UserDetailsViewModel {
@@ -55,16 +73,26 @@ class UserDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.loginTextView.text = login
         binding.rwUserDetails.adapter = adapter
-        repoList.clear()
         viewModel.repos.subscribe(handler) { newRepos ->
-            Picasso.get().load(newRepos!![0].owner.avatarUrl).into(binding.avatarImageView)
-            repoList.addAll(newRepos)
-            DiffUtil
-                .calculateDiff(UserDetailsDiffUtilCallback(adapter.getData(), repoList))
-                .dispatchUpdatesTo(adapter)
-            adapter.setData(repoList)
+            avatarUrl = newRepos!![0].owner.avatarUrl
+            initRecyclerView(newRepos)
         }
-        viewModel.getUser(login)
+        if (repoList.isNullOrEmpty()) {
+            Log.d("@@@", "Fragment onViewCreated: fetch data online")
+            viewModel.getUser(login)
+        } else {
+            Log.d("@@@", "Fragment onViewCreated: restore instance state")
+            initRecyclerView(repoList)
+        }
+    }
+
+    private fun initRecyclerView(repos :List<GitServerResponseData>) {
+        Picasso.get().load(avatarUrl).into(binding.avatarImageView)
+        repoList.addAll(repos)
+        DiffUtil
+            .calculateDiff(UserDetailsDiffUtilCallback(adapter.getData(), repoList))
+            .dispatchUpdatesTo(adapter)
+        adapter.setData(repoList)
     }
 
     companion object {
@@ -80,6 +108,5 @@ class UserDetailsFragment : Fragment() {
         super.onDestroy()
         viewModel.repos.unsubscribeAll()
         viewModel.unSubscribeDisposable()
-        repoList.clear()
     }
 }
