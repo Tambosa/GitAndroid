@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import com.aroman.gitandroid.app
 import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
@@ -14,14 +15,14 @@ import com.squareup.picasso.Picasso
 
 private const val LOGIN = "login"
 
-class UserDetailsFragment() : Fragment() {
+class UserDetailsFragment : Fragment() {
     private var login = "login"
     private val repoList: MutableList<GitServerResponseData> = ArrayList()
 
     private lateinit var binding: FragmentUserDetailsBinding
     private lateinit var viewModel: UserDetailsViewModel
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
-    private val adapter = UserDetailAdapter()
+    private val adapter = UserDetailsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +54,12 @@ class UserDetailsFragment() : Fragment() {
         binding.loginTextView.text = login
         binding.rwUserDetails.adapter = adapter
         repoList.clear()
-        viewModel.repos.subscribe(handler) { repo ->
-            Picasso.get().load(repo?.owner?.avatarUrl).into(binding.avatarImageView)
-            repoList.add(repo!!)
+        viewModel.repos.subscribe(handler) { newRepos ->
+            Picasso.get().load(newRepos!![0].owner.avatarUrl).into(binding.avatarImageView)
+            repoList.addAll(newRepos)
+            DiffUtil
+                .calculateDiff(UserDetailsDiffUtilCallback(adapter.getData(), repoList))
+                .dispatchUpdatesTo(adapter)
             adapter.setData(repoList)
         }
         viewModel.getUser(login)

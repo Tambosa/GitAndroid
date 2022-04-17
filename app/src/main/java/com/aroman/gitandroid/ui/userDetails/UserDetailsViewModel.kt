@@ -14,8 +14,7 @@ class UserDetailsViewModel(
 ) :
     UserDetailsContract.UserDetailsViewModel {
 
-    private var listRepos: List<GitServerResponseData> = emptyList()
-    override val repos: Publisher<GitServerResponseData> = Publisher()
+    override val repos: Publisher<List<GitServerResponseData>> = Publisher()
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override fun getUser(login: String) {
@@ -23,18 +22,17 @@ class UserDetailsViewModel(
 
         compositeDisposable.add(
             repository.getListRepos(login).subscribeBy {
-                listRepos = it
-                for (repo in listRepos) {
-                    repos.post(repo)
-                    userLocalRepo.insertUser(
-                        DbUsers(
-                            login = repo.owner.login,
-                            avatarUrl = repo.owner.avatarUrl,
-                            repoName = repo.repoName,
-                            repoLink = repo.repoHtmlUrl
-                        )
-                    )
-                }
+                repos.post(it)
+//                for (repo in repos as List<GitServerResponseData>) {
+//                    userLocalRepo.insertUser(
+//                        DbUsers(
+//                            login = repo.owner.login,
+//                            avatarUrl = repo.owner.avatarUrl,
+//                            repoName = repo.repoName,
+//                            repoLink = repo.repoHtmlUrl
+//                        )
+//                    )
+//                }
             })
     }
 

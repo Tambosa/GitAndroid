@@ -10,7 +10,6 @@
         android:id="@+id/item_git_repo_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:textSize="@dimen/item_ud_git_repo_name_text_size"
         android:textStyle="bold"
         tools:text="RepoName" />
