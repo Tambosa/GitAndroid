@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GitAndroid</string>
+    <string name="login">Login</string>
 </resources>
