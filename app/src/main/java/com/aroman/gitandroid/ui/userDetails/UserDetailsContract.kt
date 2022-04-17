@@ -1,10 +1,10 @@
-package com.aroman.gitandroid.ui
+package com.aroman.gitandroid.ui.userDetails
 
 import androidx.annotation.MainThread
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
 import com.aroman.gitandroid.utils.Publisher
 
-class GitAndroidContract {
+class UserDetailsContract {
     interface UserDetailsViewModel {
         val repos: Publisher<GitServerResponseData>
 

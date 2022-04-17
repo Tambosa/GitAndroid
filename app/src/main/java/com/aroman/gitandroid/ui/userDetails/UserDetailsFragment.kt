@@ -1,4 +1,4 @@
-package com.aroman.gitandroid.ui
+package com.aroman.gitandroid.ui.userDetails
 
 import android.os.Bundle
 import android.os.Handler

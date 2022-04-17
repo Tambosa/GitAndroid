@@ -1,4 +1,4 @@
-package com.aroman.gitandroid.ui
+package com.aroman.gitandroid.ui.userDetails
 
 import com.aroman.gitandroid.data.GitRepo
 import com.aroman.gitandroid.data.UserLocalRepo
@@ -12,7 +12,7 @@ class UserDetailsViewModel(
     private val repository: GitRepo,
     private val userLocalRepo: UserLocalRepo,
 ) :
-    GitAndroidContract.UserDetailsViewModel {
+    UserDetailsContract.UserDetailsViewModel {
 
     private var listRepos: List<GitServerResponseData> = emptyList()
     override val repos: Publisher<GitServerResponseData> = Publisher()

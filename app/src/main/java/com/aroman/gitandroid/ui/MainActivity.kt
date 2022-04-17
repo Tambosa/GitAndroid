@@ -7,8 +7,8 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.aroman.gitandroid.app
 import com.aroman.gitandroid.databinding.ActivityMainBinding
+import com.aroman.gitandroid.ui.userDetails.UserDetailsFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
