@@ -3,14 +3,10 @@ package com.aroman.gitandroid.ui.userDetails
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Html
-import android.text.method.LinkMovementMethod
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.aroman.gitandroid.app
 import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
@@ -20,9 +16,12 @@ private const val LOGIN = "login"
 
 class UserDetailsFragment() : Fragment() {
     private var login = "login"
+    private val repoList: MutableList<GitServerResponseData> = ArrayList()
+
     private lateinit var binding: FragmentUserDetailsBinding
     private lateinit var viewModel: UserDetailsViewModel
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
+    private val adapter = UserDetailAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,26 +51,14 @@ class UserDetailsFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.loginTextView.text = login
-
+        binding.rwUserDetails.adapter = adapter
+        repoList.clear()
         viewModel.repos.subscribe(handler) { repo ->
             Picasso.get().load(repo?.owner?.avatarUrl).into(binding.avatarImageView)
-            initRepoList(repo)
+            repoList.add(repo!!)
+            adapter.setData(repoList)
         }
         viewModel.getUser(login)
-    }
-
-    private fun initRepoList(repo: GitServerResponseData?) {
-        binding.llRepoList.addView(
-            TextView(requireActivity()).apply {
-                text = Html.fromHtml(
-                    "<a href=\"" + repo?.repoHtmlUrl + "\">" + repo?.repoName + "</a>",
-                    Html.FROM_HTML_MODE_LEGACY
-                )
-                textSize = 30f
-                gravity = Gravity.CENTER
-                movementMethod = LinkMovementMethod.getInstance()
-            }
-        )
     }
 
     companion object {
@@ -87,5 +74,6 @@ class UserDetailsFragment() : Fragment() {
         super.onDestroy()
         viewModel.repos.unsubscribeAll()
         viewModel.unSubscribeDisposable()
+        repoList.clear()
     }
 }
