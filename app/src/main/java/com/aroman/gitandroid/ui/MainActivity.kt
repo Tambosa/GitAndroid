@@ -7,12 +7,8 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.aroman.gitandroid.data.GitRetrofitImpl
 import com.aroman.gitandroid.databinding.ActivityMainBinding
-import com.aroman.gitandroid.domain.entities.GitServerResponseData
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.aroman.gitandroid.ui.userDetails.UserDetailsFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -21,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initHardcodedUserList()
     }
 

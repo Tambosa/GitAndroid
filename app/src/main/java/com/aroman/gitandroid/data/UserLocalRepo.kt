@@ -1,6 +1,7 @@
-package com.aroman.gitandroid.domain
+package com.aroman.gitandroid.data
 
 import android.content.Context
+import com.aroman.gitandroid.data.DbUserDao
 import com.aroman.gitandroid.data.LocalDatabase
 import com.aroman.gitandroid.domain.entities.DbUsers
 

@@ -1,14 +1,14 @@
-package com.aroman.gitandroid.ui
+package com.aroman.gitandroid.ui.userDetails
 
 import androidx.annotation.MainThread
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
 import com.aroman.gitandroid.utils.Publisher
 
-class GitAndroidContract {
+class UserDetailsContract {
     interface UserDetailsViewModel {
-        val data: Publisher<GitServerResponseData>
+        val repos: Publisher<List<GitServerResponseData>>
 
         @MainThread
-        fun getUser(login: String)
+        fun getUser(isOnline: Boolean, login: String)
     }
 }
