@@ -16,3 +16,10 @@ data class GitServerResponseDataOwner(
     @field: SerializedName("login") val login: String,
     @field: SerializedName("avatar_url") val avatarUrl: String
 ) : Parcelable
+
+fun GitServerResponseData.toDbUsers() = DbUsers(
+    login = owner.login,
+    avatarUrl = owner.avatarUrl,
+    repoName = repoName,
+    repoLink = repoHtmlUrl
+)

@@ -13,3 +13,12 @@ data class DbUsers(
     @ColumnInfo(name = "repoName") var repoName: String,
     @ColumnInfo(name = "repoLink") var repoLink: String,
 )
+
+fun DbUsers.toGitServerResponseData() = GitServerResponseData(
+    repoName = repoName,
+    repoHtmlUrl = repoLink,
+    owner = GitServerResponseDataOwner(
+        login = login,
+        avatarUrl = avatarUrl
+    )
+)
