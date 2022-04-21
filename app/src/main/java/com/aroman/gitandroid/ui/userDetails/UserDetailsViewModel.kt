@@ -4,6 +4,7 @@ import android.util.Log
 import com.aroman.gitandroid.domain.GitRepo
 import com.aroman.gitandroid.data.UserLocalRepo
 import com.aroman.gitandroid.domain.entities.*
+import com.aroman.gitandroid.utils.BaseViewModel
 import com.aroman.gitandroid.utils.Publisher
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
@@ -11,8 +12,9 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 class UserDetailsViewModel(
     private val repository: GitRepo,
     private val userLocalRepo: UserLocalRepo,
+    override val id: String,
 ) :
-    UserDetailsContract.UserDetailsViewModel {
+    UserDetailsContract.UserDetailsViewModel, BaseViewModel {
 
     override val repos: Publisher<List<GitServerResponseData>> = Publisher()
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
