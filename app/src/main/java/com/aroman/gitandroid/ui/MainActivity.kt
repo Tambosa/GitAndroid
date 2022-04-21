@@ -7,15 +7,15 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aroman.gitandroid.databinding.ActivityMainBinding
 import com.aroman.gitandroid.ui.userDetails.UserDetailsFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private val binding by viewBinding(ActivityMainBinding::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initHardcodedUserList()
     }

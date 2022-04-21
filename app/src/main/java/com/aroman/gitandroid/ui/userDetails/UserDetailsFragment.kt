@@ -2,16 +2,14 @@ package com.aroman.gitandroid.ui.userDetails
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aroman.gitandroid.app
 import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
@@ -28,7 +26,7 @@ class UserDetailsFragment : Fragment() {
     private var repoList: ArrayList<GitServerResponseData> = ArrayList()
     private var avatarUrl = ""
 
-    private lateinit var binding: FragmentUserDetailsBinding
+    private val binding by viewBinding(FragmentUserDetailsBinding::class.java)
     private lateinit var viewModel: UserDetailsViewModel
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
     private val adapter = UserDetailsAdapter()
@@ -59,17 +57,9 @@ class UserDetailsFragment : Fragment() {
         val viewModel =
             requireActivity().lastCustomNonConfigurationInstance as? UserDetailsViewModel
         return viewModel ?: UserDetailsViewModel(
-            requireActivity().app.gitRepo,
-            requireActivity().app.userLocalRepo
+            app.gitRepo,
+            app.userLocalRepo
         )
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentUserDetailsBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
