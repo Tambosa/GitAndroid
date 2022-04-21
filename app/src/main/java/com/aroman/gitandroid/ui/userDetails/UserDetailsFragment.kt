@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aroman.gitandroid.app
@@ -26,7 +28,7 @@ class UserDetailsFragment : Fragment() {
     private var repoList: ArrayList<GitServerResponseData> = ArrayList()
     private var avatarUrl = ""
 
-    private val binding by viewBinding(FragmentUserDetailsBinding::class.java)
+    private lateinit var binding: FragmentUserDetailsBinding
     private lateinit var viewModel: UserDetailsViewModel
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
     private val adapter = UserDetailsAdapter()
@@ -60,6 +62,14 @@ class UserDetailsFragment : Fragment() {
             app.gitRepo,
             app.userLocalRepo
         )
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentUserDetailsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

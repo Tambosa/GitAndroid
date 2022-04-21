@@ -1,7 +1,7 @@
 package com.aroman.gitandroid.ui.userDetails
 
 import android.util.Log
-import com.aroman.gitandroid.data.GitRepo
+import com.aroman.gitandroid.domain.GitRepo
 import com.aroman.gitandroid.data.UserLocalRepo
 import com.aroman.gitandroid.domain.entities.*
 import com.aroman.gitandroid.utils.Publisher

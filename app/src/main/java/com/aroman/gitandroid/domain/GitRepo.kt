@@ -1,4 +1,4 @@
-package com.aroman.gitandroid.data
+package com.aroman.gitandroid.domain
 
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
 import io.reactivex.rxjava3.core.Single
