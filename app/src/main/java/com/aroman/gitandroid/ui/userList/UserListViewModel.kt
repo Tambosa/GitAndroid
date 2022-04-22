@@ -1,7 +1,7 @@
 package com.aroman.gitandroid.ui.userList
 
 import com.aroman.gitandroid.domain.UsersUsecase
-import com.aroman.gitandroid.domain.entities.UserEntity
+import com.aroman.gitandroid.data.mock.UserEntity
 import com.aroman.gitandroid.utils.BaseViewModel
 import com.aroman.gitandroid.utils.Publisher
 

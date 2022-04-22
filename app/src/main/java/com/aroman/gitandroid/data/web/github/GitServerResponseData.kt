@@ -1,6 +1,7 @@
 package com.aroman.gitandroid.domain.entities
 
 import android.os.Parcelable
+import com.aroman.gitandroid.data.db.room.DbUsers
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 

@@ -1,7 +1,6 @@
 package com.aroman.gitandroid.data.mock
 
 import com.aroman.gitandroid.domain.UsersUsecase
-import com.aroman.gitandroid.domain.entities.UserEntity
 import java.util.*
 
 class MockUserListRepoImpl : UsersUsecase {
