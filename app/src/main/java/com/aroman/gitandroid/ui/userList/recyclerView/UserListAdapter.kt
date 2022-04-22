@@ -2,7 +2,7 @@ package com.aroman.gitandroid.ui.userList.recyclerView
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.aroman.gitandroid.domain.entities.UserEntity
+import com.aroman.gitandroid.data.mock.UserEntity
 
 class UserListAdapter(
     private val itemClickCallback: (UserEntity) -> Unit

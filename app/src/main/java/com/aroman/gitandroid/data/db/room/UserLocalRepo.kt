@@ -2,9 +2,7 @@ package com.aroman.gitandroid.data.db.room
 
 import android.content.Context
 import com.aroman.gitandroid.domain.RepositoryUsecase
-import com.aroman.gitandroid.domain.entities.DbUsers
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
-import com.aroman.gitandroid.domain.entities.toGitServerResponseData
 import io.reactivex.rxjava3.core.Single
 
 class UserLocalRepo(context: Context) : RepositoryUsecase {

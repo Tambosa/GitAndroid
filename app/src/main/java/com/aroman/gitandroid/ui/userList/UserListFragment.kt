@@ -11,7 +11,7 @@ import com.aroman.gitandroid.R
 import com.aroman.gitandroid.app
 import com.aroman.gitandroid.databinding.FragmentUserListBinding
 import com.aroman.gitandroid.domain.FragmentController
-import com.aroman.gitandroid.domain.entities.UserEntity
+import com.aroman.gitandroid.data.mock.UserEntity
 import com.aroman.gitandroid.ui.userList.recyclerView.UserListAdapter
 import java.lang.IllegalStateException
 import java.util.*

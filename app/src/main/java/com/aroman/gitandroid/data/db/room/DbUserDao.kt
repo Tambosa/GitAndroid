@@ -1,7 +1,6 @@
 package com.aroman.gitandroid.data.db.room
 
 import androidx.room.*
-import com.aroman.gitandroid.domain.entities.DbUsers
 
 @Dao
 interface DbUserDao {
