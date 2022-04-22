@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.aroman.gitandroid.domain.entities.GitServerResponseData
-import com.aroman.gitandroid.domain.entities.GitServerResponseDataOwner
+import com.aroman.gitandroid.data.web.github.GitServerResponseData
+import com.aroman.gitandroid.data.web.github.GitServerResponseDataOwner
 
 @Entity(tableName = "user", indices = [Index(value = ["repoName"], unique = true)])
 data class DbUsers(

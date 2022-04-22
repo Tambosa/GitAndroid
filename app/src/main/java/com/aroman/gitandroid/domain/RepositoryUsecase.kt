@@ -1,6 +1,6 @@
 package com.aroman.gitandroid.domain
 
-import com.aroman.gitandroid.domain.entities.GitServerResponseData
+import com.aroman.gitandroid.data.web.github.GitServerResponseData
 import io.reactivex.rxjava3.core.Single
 
 interface RepositoryUsecase {

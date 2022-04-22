@@ -2,7 +2,7 @@ package com.aroman.gitandroid.ui.userDetails.recyclerView
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.aroman.gitandroid.domain.entities.GitServerResponseData
+import com.aroman.gitandroid.data.web.github.GitServerResponseData
 
 class UserDetailsAdapter : RecyclerView.Adapter<UserDetailsViewHolder>() {
     private var data: List<GitServerResponseData> = emptyList()

@@ -1,4 +1,4 @@
-package com.aroman.gitandroid.domain.entities
+package com.aroman.gitandroid.data.web.github
 
 import android.os.Parcelable
 import com.aroman.gitandroid.data.db.room.DbUsers

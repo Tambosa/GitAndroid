@@ -2,8 +2,9 @@ package com.aroman.gitandroid.ui.userDetails
 
 import android.util.Log
 import com.aroman.gitandroid.data.db.room.UserLocalRepo
+import com.aroman.gitandroid.data.web.github.GitServerResponseData
+import com.aroman.gitandroid.data.web.github.toDbUsers
 import com.aroman.gitandroid.domain.RepositoryUsecase
-import com.aroman.gitandroid.domain.entities.*
 import com.aroman.gitandroid.utils.BaseViewModel
 import com.aroman.gitandroid.utils.Publisher
 import io.reactivex.rxjava3.disposables.CompositeDisposable
