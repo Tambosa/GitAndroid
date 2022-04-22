@@ -16,7 +16,6 @@ import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.domain.entities.GitServerResponseData
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsAdapter
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsDiffUtilCallback
-import com.aroman.gitandroid.ui.userList.UserListViewModel
 import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.collections.ArrayList
@@ -59,7 +58,7 @@ class UserDetailsFragment : Fragment() {
             viewModel = app.viewModelStore.getViewModel(viewModelId) as UserDetailsViewModel
         } else {
             val id = UUID.randomUUID().toString()
-            viewModel = UserDetailsViewModel(app.gitRepo, app.userLocalRepo, id)
+            viewModel = UserDetailsViewModel(app.repoListWeb, app.repoListLocal, id)
             app.viewModelStore.saveViewModel(viewModel)
         }
     }

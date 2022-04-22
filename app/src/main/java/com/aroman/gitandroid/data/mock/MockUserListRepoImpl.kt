@@ -1,10 +1,10 @@
-package com.aroman.gitandroid.data
+package com.aroman.gitandroid.data.mock
 
-import com.aroman.gitandroid.domain.UserListRepo
+import com.aroman.gitandroid.domain.UsersUsecase
 import com.aroman.gitandroid.domain.entities.UserEntity
 import java.util.*
 
-class HardcodedUserListRepoImpl : UserListRepo {
+class MockUserListRepoImpl : UsersUsecase {
     override fun getUsers(): List<UserEntity> {
         return listOf(
             UserEntity(generateId(), "tambosa"),

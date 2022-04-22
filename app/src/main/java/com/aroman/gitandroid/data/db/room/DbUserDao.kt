@@ -1,4 +1,4 @@
-package com.aroman.gitandroid.data
+package com.aroman.gitandroid.data.db.room
 
 import androidx.room.*
 import com.aroman.gitandroid.domain.entities.DbUsers

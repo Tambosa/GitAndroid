@@ -1,12 +1,12 @@
 package com.aroman.gitandroid.ui.userList
 
-import com.aroman.gitandroid.domain.UserListRepo
+import com.aroman.gitandroid.domain.UsersUsecase
 import com.aroman.gitandroid.domain.entities.UserEntity
 import com.aroman.gitandroid.utils.BaseViewModel
 import com.aroman.gitandroid.utils.Publisher
 
 class UserListViewModel(
-    private val repository: UserListRepo,
+    private val repository: UsersUsecase,
     override val id: String
 ) : userListContract.UserListViewModel, BaseViewModel {
 

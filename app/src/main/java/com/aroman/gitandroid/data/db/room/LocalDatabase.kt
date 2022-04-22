@@ -1,4 +1,4 @@
-package com.aroman.gitandroid.data
+package com.aroman.gitandroid.data.db.room
 
 import android.content.Context
 import androidx.room.Database
