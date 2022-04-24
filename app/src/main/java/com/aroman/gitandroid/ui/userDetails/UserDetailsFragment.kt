@@ -2,23 +2,25 @@ package com.aroman.gitandroid.ui.userDetails
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.aroman.gitandroid.app
 import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
-import com.aroman.gitandroid.domain.entities.GitServerResponseData
+import com.aroman.gitandroid.data.web.github.GitServerResponseData
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsAdapter
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsDiffUtilCallback
 import com.squareup.picasso.Picasso
+import java.util.*
+import kotlin.collections.ArrayList
 
+private const val VIEW_MODEL_ID = "view_model_id"
 private const val LOGIN = "login"
 private const val REPO_LIST = "repo_list"
 private const val AVATAR_URL = "avatar_url"
@@ -39,7 +41,8 @@ class UserDetailsFragment : Fragment() {
             login = bundle.getString(LOGIN)!!
         }
 
-        viewModel = restoreViewModel()
+        restoreViewModel(savedInstanceState)
+
         avatarUrl = savedInstanceState?.getString(AVATAR_URL).toString()
         val tempList = savedInstanceState?.getParcelableArrayList<GitServerResponseData>(REPO_LIST)
         if (tempList != null) {
@@ -49,19 +52,22 @@ class UserDetailsFragment : Fragment() {
         }
     }
 
+    private fun restoreViewModel(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            val viewModelId = savedInstanceState.getString(VIEW_MODEL_ID)!!
+            viewModel = app.viewModelStore.getViewModel(viewModelId) as UserDetailsViewModel
+        } else {
+            val id = UUID.randomUUID().toString()
+            viewModel = UserDetailsViewModel(app.repoListWeb, app.repoListLocal, id)
+            app.viewModelStore.saveViewModel(viewModel)
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(REPO_LIST, repoList)
         outState.putString(AVATAR_URL, repoList[0].owner.avatarUrl)
-    }
-
-    private fun restoreViewModel(): UserDetailsViewModel {
-        val viewModel =
-            requireActivity().lastCustomNonConfigurationInstance as? UserDetailsViewModel
-        return viewModel ?: UserDetailsViewModel(
-            requireActivity().app.gitRepo,
-            requireActivity().app.userLocalRepo
-        )
+        outState.putString(VIEW_MODEL_ID, viewModel.id)
     }
 
     override fun onCreateView(

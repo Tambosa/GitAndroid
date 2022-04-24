@@ -1,7 +1,7 @@
 package com.aroman.gitandroid.ui.userDetails.recyclerView
 
 import androidx.recyclerview.widget.DiffUtil
-import com.aroman.gitandroid.domain.entities.GitServerResponseData
+import com.aroman.gitandroid.data.web.github.GitServerResponseData
 
 class UserDetailsDiffUtilCallback(
     var oldList: List<GitServerResponseData>,

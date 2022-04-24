@@ -3,80 +3,33 @@ package com.aroman.gitandroid.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.aroman.gitandroid.databinding.ActivityMainBinding
+import com.aroman.gitandroid.domain.FragmentController
 import com.aroman.gitandroid.ui.userDetails.UserDetailsFragment
+import com.aroman.gitandroid.ui.userList.UserListFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FragmentController {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initHardcodedUserList()
+
+        if (savedInstanceState == null) {
+            val userListFragment: Fragment = UserListFragment()
+            supportFragmentManager
+                .beginTransaction()
+                .add(binding.mainContainer.id, userListFragment)
+                .commit()
+        }
     }
 
-    private fun initHardcodedUserList() {
-        val params = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-            )
-        )
-        params.weight = 1f
-        val user1 = TextView(this).apply {
-            text = "tambosa"
-            textSize = 40f
-            gravity = Gravity.CENTER
-            layoutParams = params
-        }
-        val user2 = TextView(this).apply {
-            text = "borhammere"
-            textSize = 40f
-            gravity = Gravity.CENTER
-            layoutParams = params
-        }
-        val user3 = TextView(this).apply {
-            text = "JakeWharton"
-            textSize = 40f
-            gravity = Gravity.CENTER
-            layoutParams = params
-        }
-        val user4 = TextView(this).apply {
-            text = "fabpot"
-            textSize = 40f
-            gravity = Gravity.CENTER
-            layoutParams = params
-        }
-
-        binding.llMainLayout.addView(user1)
-        binding.llMainLayout.addView(user2)
-        binding.llMainLayout.addView(user3)
-        binding.llMainLayout.addView(user4)
-
-        user1.setOnClickListener {
-            initUserDetailsFragment(user1.text.toString())
-        }
-        user2.setOnClickListener {
-            initUserDetailsFragment(user2.text.toString())
-        }
-        user3.setOnClickListener {
-            initUserDetailsFragment(user3.text.toString())
-        }
-        user4.setOnClickListener {
-            initUserDetailsFragment(user4.text.toString())
-        }
-
-    }
-
-    private fun initUserDetailsFragment(userName: String) {
+    override fun openUserDetails(userName: String) {
         Log.d("@@@", "initUserDetailsFragment: $userName")
         supportFragmentManager.beginTransaction()
-            .add(binding.llMainLayout.id, UserDetailsFragment.newInstance(userName))
+            .replace(binding.mainContainer.id, UserDetailsFragment.newInstance(userName))
             .addToBackStack("")
             .commit()
     }

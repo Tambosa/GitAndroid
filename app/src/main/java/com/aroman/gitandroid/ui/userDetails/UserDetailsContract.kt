@@ -1,7 +1,7 @@
 package com.aroman.gitandroid.ui.userDetails
 
 import androidx.annotation.MainThread
-import com.aroman.gitandroid.domain.entities.GitServerResponseData
+import com.aroman.gitandroid.data.web.github.GitServerResponseData
 import com.aroman.gitandroid.utils.Publisher
 
 class UserDetailsContract {

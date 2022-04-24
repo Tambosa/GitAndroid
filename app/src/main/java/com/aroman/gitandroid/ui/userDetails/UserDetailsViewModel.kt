@@ -1,20 +1,21 @@
 package com.aroman.gitandroid.ui.userDetails
 
 import android.util.Log
-import com.aroman.gitandroid.data.GitRepo
-import com.aroman.gitandroid.data.UserLocalRepo
-import com.aroman.gitandroid.domain.entities.DbUsers
-import com.aroman.gitandroid.domain.entities.GitServerResponseData
-import com.aroman.gitandroid.domain.entities.GitServerResponseDataOwner
+import com.aroman.gitandroid.data.db.room.UserLocalRepo
+import com.aroman.gitandroid.data.web.github.GitServerResponseData
+import com.aroman.gitandroid.data.web.github.toDbUsers
+import com.aroman.gitandroid.domain.RepositoryUsecase
+import com.aroman.gitandroid.utils.BaseViewModel
 import com.aroman.gitandroid.utils.Publisher
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 
 class UserDetailsViewModel(
-    private val repository: GitRepo,
-    private val userLocalRepo: UserLocalRepo,
+    private val repositoryWeb: RepositoryUsecase,
+    private val repositoryLocal: RepositoryUsecase,
+    override val id: String,
 ) :
-    UserDetailsContract.UserDetailsViewModel {
+    UserDetailsContract.UserDetailsViewModel, BaseViewModel {
 
     override val repos: Publisher<List<GitServerResponseData>> = Publisher()
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -23,45 +24,33 @@ class UserDetailsViewModel(
         //userLocalRepo.clearDb()
         if (isOnline) {
             Log.d("@@@", "getUser: RETROFIT")
-            getUserRepo(login)
+            getRepoListWeb(login)
         } else {
             Log.d("@@@", "getUser: ROOM")
-            getUserDb(login)
+            getRepoListLocal(login)
         }
     }
 
-    private fun getUserDb(login: String) {
-        val localRepoList = userLocalRepo.getAllRepos(login)
-        val convertedLocalRepoList = ArrayList<GitServerResponseData>()
-        for (dbUsers in localRepoList) {
-            convertedLocalRepoList.add(
-                GitServerResponseData(
-                    dbUsers.repoName,
-                    dbUsers.repoLink,
-                    GitServerResponseDataOwner(
-                        dbUsers.login,
-                        dbUsers.avatarUrl
-                    )
-                )
-            )
-        }
-        repos.post(convertedLocalRepoList)
-    }
-
-    private fun getUserRepo(login: String) {
+    private fun getRepoListLocal(login: String) {
         compositeDisposable.add(
-            repository.getListRepos(login).subscribeBy(
-                onSuccess = { response ->
-                    repos.post(response)
-                    for (repo in response) {
-                        userLocalRepo.insertUser(
-                            DbUsers(
-                                login = repo.owner.login,
-                                avatarUrl = repo.owner.avatarUrl,
-                                repoName = repo.repoName,
-                                repoLink = repo.repoHtmlUrl
-                            )
-                        )
+            repositoryLocal.getListRepos(login).subscribeBy(
+                onSuccess = { data ->
+                    repos.post(data)
+                },
+                onError = {
+                    Log.d("@@@", "Error: ${it.message}")
+                }
+            )
+        )
+    }
+
+    private fun getRepoListWeb(login: String) {
+        compositeDisposable.add(
+            repositoryWeb.getListRepos(login).subscribeBy(
+                onSuccess = { data ->
+                    repos.post(data)
+                    for (repo in data) {
+                        (repositoryLocal as UserLocalRepo).insertUser(repo.toDbUsers())
                     }
                 },
                 onError = {

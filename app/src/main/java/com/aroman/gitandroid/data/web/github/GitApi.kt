@@ -1,6 +1,5 @@
-package com.aroman.gitandroid.data
+package com.aroman.gitandroid.data.web.github
 
-import com.aroman.gitandroid.domain.entities.GitServerResponseData
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
