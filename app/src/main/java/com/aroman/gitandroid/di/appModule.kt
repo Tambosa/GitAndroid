@@ -6,7 +6,8 @@ import com.aroman.gitandroid.data.web.github.GitApi
 import com.aroman.gitandroid.data.web.github.GitRepoRetrofitImpl
 import com.aroman.gitandroid.domain.RepositoryUsecase
 import com.aroman.gitandroid.domain.UsersUsecase
-import com.aroman.gitandroid.utils.ViewModelStore
+import com.aroman.gitandroid.ui.userDetails.UserDetailsViewModel
+import com.aroman.gitandroid.ui.userList.UserListViewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -29,5 +30,6 @@ val appModule = module {
     single<RepositoryUsecase>(named("local")) { UserLocalRepo(get()) }
     single<UsersUsecase> { MockUserListRepoImpl() }
 
-    single<ViewModelStore> { ViewModelStore() }
+    single<UserDetailsViewModel> { UserDetailsViewModel(get(named("web")), get(named("local"))) }
+    single<UserListViewModel> {UserListViewModel(get())}
 }

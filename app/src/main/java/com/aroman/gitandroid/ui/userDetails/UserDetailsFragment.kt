@@ -13,17 +13,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.data.web.github.GitServerResponseData
-import com.aroman.gitandroid.domain.RepositoryUsecase
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsAdapter
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsDiffUtilCallback
-import com.aroman.gitandroid.utils.ViewModelStore
 import com.squareup.picasso.Picasso
 import org.koin.android.ext.android.inject
-import org.koin.core.qualifier.named
-import java.util.*
 import kotlin.collections.ArrayList
 
-private const val VIEW_MODEL_ID = "view_model_id"
 private const val LOGIN = "login"
 private const val REPO_LIST = "repo_list"
 private const val AVATAR_URL = "avatar_url"
@@ -34,21 +29,15 @@ class UserDetailsFragment : Fragment() {
     private var avatarUrl = ""
 
     private lateinit var binding: FragmentUserDetailsBinding
-    private lateinit var viewModel: UserDetailsViewModel
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
     private val adapter = UserDetailsAdapter()
-
-    private val viewModelStore: ViewModelStore by inject()
-    private val repoUsecaseWeb: RepositoryUsecase by inject(named("web"))
-    private val repoUsecaseLocal: RepositoryUsecase by inject(named("local"))
+    private val viewModel: UserDetailsViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { bundle ->
             login = bundle.getString(LOGIN)!!
         }
-
-        restoreViewModel(savedInstanceState)
 
         avatarUrl = savedInstanceState?.getString(AVATAR_URL).toString()
         val tempList = savedInstanceState?.getParcelableArrayList<GitServerResponseData>(REPO_LIST)
@@ -59,22 +48,10 @@ class UserDetailsFragment : Fragment() {
         }
     }
 
-    private fun restoreViewModel(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            val viewModelId = savedInstanceState.getString(VIEW_MODEL_ID)!!
-            viewModel = viewModelStore.getViewModel(viewModelId) as UserDetailsViewModel
-        } else {
-            val id = UUID.randomUUID().toString()
-            viewModel = UserDetailsViewModel(repoUsecaseWeb, repoUsecaseLocal, id)
-            viewModelStore.saveViewModel(viewModel)
-        }
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(REPO_LIST, repoList)
         outState.putString(AVATAR_URL, repoList[0].owner.avatarUrl)
-        outState.putString(VIEW_MODEL_ID, viewModel.id)
     }
 
     override fun onCreateView(

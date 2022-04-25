@@ -13,39 +13,17 @@ import com.aroman.gitandroid.domain.FragmentController
 import com.aroman.gitandroid.data.mock.UserEntity
 import com.aroman.gitandroid.domain.UsersUsecase
 import com.aroman.gitandroid.ui.userList.recyclerView.UserListAdapter
-import com.aroman.gitandroid.utils.ViewModelStore
 import org.koin.android.ext.android.inject
 import java.lang.IllegalStateException
 import java.util.*
 
-private const val VIEW_MODEL_ID = "view_model_id"
-
 class UserListFragment : Fragment(R.layout.fragment_user_list) {
     private val binding by viewBinding(FragmentUserListBinding::class.java)
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
-    private val viewModelStore: ViewModelStore by inject()
-    private val userListRepo: UsersUsecase by inject()
-
-    private lateinit var viewModel: UserListViewModel
+    private val viewModel: UserListViewModel by inject()
     private val controller by lazy { activity as FragmentController }
     private val userListAdapter = UserListAdapter {
         controller.openUserDetails(it.userName)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        restoreViewModel(savedInstanceState)
-    }
-
-    private fun restoreViewModel(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            val viewModelId = savedInstanceState.getString(VIEW_MODEL_ID)!!
-            viewModel = viewModelStore.getViewModel(viewModelId) as UserListViewModel
-        } else {
-            val id = UUID.randomUUID().toString()
-            viewModel = UserListViewModel(userListRepo, id)
-            viewModelStore.saveViewModel(viewModel)
-        }
     }
 
     override fun onAttach(context: Context) {
@@ -68,11 +46,6 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
     private fun initRecyclerView(userList: List<UserEntity>) {
         binding.recyclerViewUserList.adapter = userListAdapter
         userListAdapter.data = userList
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(VIEW_MODEL_ID, viewModel.id)
     }
 
     override fun onDestroy() {
