@@ -49,11 +49,11 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    implementation "io.insert-koin:koin-android:3.1.6"
+
     implementation "androidx.room:room-runtime:2.4.2"
     implementation "androidx.room:room-ktx:2.4.2"
     kapt "androidx.room:room-compiler:2.4.2"
-
-    implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.5.3'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

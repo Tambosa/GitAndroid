@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/item_user_name_text_view"
+        android:id="@+id/text_item_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/user_name_margin_top"

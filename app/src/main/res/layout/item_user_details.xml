@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/item_ud_padding">
+    android:padding="@dimen/item_user_details_padding">
 
     <TextView
-        android:id="@+id/item_git_repo_name"
+        android:id="@+id/text_item_repo_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/item_ud_git_repo_name_text_size"
+        android:textSize="@dimen/item_user_details_repo_name_text_size"
         android:textStyle="bold"
         tools:text="RepoName" />
 </LinearLayout>
