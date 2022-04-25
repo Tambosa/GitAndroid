@@ -4,7 +4,7 @@ import androidx.annotation.MainThread
 import com.aroman.gitandroid.data.mock.UserEntity
 import com.aroman.gitandroid.utils.Publisher
 
-class userListContract {
+class UserListContract {
     interface UserListViewModel {
         val userList: Publisher<List<UserEntity>>
 

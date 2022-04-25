@@ -8,7 +8,7 @@ import com.aroman.gitandroid.utils.Publisher
 class UserListViewModel(
     private val repository: UsersUsecase,
     override val id: String
-) : userListContract.UserListViewModel, BaseViewModel {
+) : UserListContract.UserListViewModel, BaseViewModel {
 
     override val userList: Publisher<List<UserEntity>> = Publisher()
 

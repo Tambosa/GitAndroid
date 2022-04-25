@@ -19,10 +19,10 @@ class UserDetailsViewHolder(private val binding: ItemUserDetailsBinding) :
     }
 
     fun bind(item: GitServerResponseData) {
-        binding.itemGitRepoName.text = Html.fromHtml(
+        binding.textItemRepoName.text = Html.fromHtml(
             "<a href=\"" + item.repoHtmlUrl + "\">" + item.repoName + "</a>",
             Html.FROM_HTML_MODE_LEGACY
         )
-        binding.itemGitRepoName.movementMethod = LinkMovementMethod.getInstance()
+        binding.textItemRepoName.movementMethod = LinkMovementMethod.getInstance()
     }
 }

@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.aroman.gitandroid.app
 import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.data.web.github.GitServerResponseData
+import com.aroman.gitandroid.domain.RepositoryUsecase
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsAdapter
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsDiffUtilCallback
+import com.aroman.gitandroid.utils.ViewModelStore
 import com.squareup.picasso.Picasso
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -34,6 +37,10 @@ class UserDetailsFragment : Fragment() {
     private lateinit var viewModel: UserDetailsViewModel
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
     private val adapter = UserDetailsAdapter()
+
+    private val viewModelStore: ViewModelStore by inject()
+    private val repoUsecaseWeb: RepositoryUsecase by inject(named("web"))
+    private val repoUsecaseLocal: RepositoryUsecase by inject(named("local"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +62,11 @@ class UserDetailsFragment : Fragment() {
     private fun restoreViewModel(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             val viewModelId = savedInstanceState.getString(VIEW_MODEL_ID)!!
-            viewModel = app.viewModelStore.getViewModel(viewModelId) as UserDetailsViewModel
+            viewModel = viewModelStore.getViewModel(viewModelId) as UserDetailsViewModel
         } else {
             val id = UUID.randomUUID().toString()
-            viewModel = UserDetailsViewModel(app.repoListWeb, app.repoListLocal, id)
-            app.viewModelStore.saveViewModel(viewModel)
+            viewModel = UserDetailsViewModel(repoUsecaseWeb, repoUsecaseLocal, id)
+            viewModelStore.saveViewModel(viewModel)
         }
     }
 
@@ -80,8 +87,8 @@ class UserDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.loginTextView.text = login
-        binding.rwUserDetails.adapter = adapter
+        binding.textLogin.text = login
+        binding.recyclerViewUserDetails.adapter = adapter
         viewModel.repos.subscribe(handler) { newRepos ->
             avatarUrl = newRepos!![0].owner.avatarUrl
             initRecyclerView(newRepos)
@@ -103,7 +110,7 @@ class UserDetailsFragment : Fragment() {
     }
 
     private fun initRecyclerView(repos: List<GitServerResponseData>) {
-        Picasso.get().load(avatarUrl).into(binding.avatarImageView)
+        Picasso.get().load(avatarUrl).into(binding.imageAvatar)
         repoList.addAll(repos)
         DiffUtil
             .calculateDiff(UserDetailsDiffUtilCallback(adapter.getData(), repoList))
