@@ -31,5 +31,5 @@ val appModule = module {
     single<UsersUsecase> { MockUserListRepoImpl() }
 
     single<UserDetailsViewModel> { UserDetailsViewModel(get(named("web")), get(named("local"))) }
-    single<UserListViewModel> {UserListViewModel(get())}
+    single<UserListViewModel> { UserListViewModel(get()) }
 }

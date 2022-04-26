@@ -7,10 +7,10 @@ interface DbUserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: DbUsers)
 
-    @Query ("SELECT * FROM user")
+    @Query("SELECT * FROM user")
     fun getAllUsers(): List<DbUsers>
 
-    @Query ("SELECT * FROM user WHERE login LIKE :login")
+    @Query("SELECT * FROM user WHERE login LIKE :login")
     fun getAllRepos(login: String): List<DbUsers>
 
     @Update
@@ -19,6 +19,6 @@ interface DbUserDao {
     @Delete
     fun deleteUser(users: DbUsers)
 
-    @Query ("DELETE FROM user")
+    @Query("DELETE FROM user")
     fun clearDb()
 }

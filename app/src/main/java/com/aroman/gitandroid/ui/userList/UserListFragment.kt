@@ -8,14 +8,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aroman.gitandroid.R
+import com.aroman.gitandroid.data.mock.UserEntity
 import com.aroman.gitandroid.databinding.FragmentUserListBinding
 import com.aroman.gitandroid.domain.FragmentController
-import com.aroman.gitandroid.data.mock.UserEntity
-import com.aroman.gitandroid.domain.UsersUsecase
 import com.aroman.gitandroid.ui.userList.recyclerView.UserListAdapter
 import org.koin.android.ext.android.inject
-import java.lang.IllegalStateException
-import java.util.*
 
 class UserListFragment : Fragment(R.layout.fragment_user_list) {
     private val binding by viewBinding(FragmentUserListBinding::class.java)

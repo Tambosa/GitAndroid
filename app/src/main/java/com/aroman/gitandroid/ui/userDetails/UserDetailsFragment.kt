@@ -7,17 +7,16 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
-import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.data.web.github.GitServerResponseData
+import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsAdapter
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsDiffUtilCallback
 import com.squareup.picasso.Picasso
 import org.koin.android.ext.android.inject
-import kotlin.collections.ArrayList
 
 private const val LOGIN = "login"
 private const val REPO_LIST = "repo_list"
