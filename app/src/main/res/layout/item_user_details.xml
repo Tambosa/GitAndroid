@@ -7,7 +7,7 @@
     android:padding="@dimen/item_user_details_padding">
 
     <TextView
-        android:id="@+id/text_item_repo_name"
+        android:id="@+id/item_repo_name_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/item_user_details_repo_name_text_size"

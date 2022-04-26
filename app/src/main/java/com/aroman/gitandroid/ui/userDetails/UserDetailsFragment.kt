@@ -64,8 +64,8 @@ class UserDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.textLogin.text = login
-        binding.recyclerViewUserDetails.adapter = adapter
+        binding.loginTextView.text = login
+        binding.userDetailsRecyclerView.adapter = adapter
         viewModel.repos.subscribe(handler) { newRepos ->
             avatarUrl = newRepos!![0].owner.avatarUrl
             initRecyclerView(newRepos)
@@ -87,7 +87,7 @@ class UserDetailsFragment : Fragment() {
     }
 
     private fun initRecyclerView(repos: List<GitServerResponseData>) {
-        Picasso.get().load(avatarUrl).into(binding.imageAvatar)
+        Picasso.get().load(avatarUrl).into(binding.avatarImageView)
         repoList.addAll(repos)
         DiffUtil
             .calculateDiff(UserDetailsDiffUtilCallback(adapter.getData(), repoList))

@@ -20,7 +20,7 @@ class UserListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun bind(item: UserEntity, listener: (UserEntity) -> Unit) {
-        binding.textItemUserName.text = item.userName
+        binding.itemUserNameTextView.text = item.userName
         binding.root.setOnClickListener { listener.invoke(item) }
     }
 }

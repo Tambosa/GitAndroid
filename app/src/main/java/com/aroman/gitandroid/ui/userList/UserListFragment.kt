@@ -44,7 +44,7 @@ class UserListFragment : Fragment(R.layout.fragment_user_list) {
     }
 
     private fun initRecyclerView(userList: List<UserEntity>) {
-        binding.recyclerViewUserList.adapter = userListAdapter
+        binding.userListRecyclerView.adapter = userListAdapter
         userListAdapter.data = userList
     }
 
