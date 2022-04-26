@@ -1,4 +1,4 @@
-package com.aroman.gitandroid.data.mock
+package com.aroman.gitandroid.domain.entity
 
 data class UserEntity(
     val id: String,

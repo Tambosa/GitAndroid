@@ -8,7 +8,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aroman.gitandroid.R
-import com.aroman.gitandroid.data.mock.UserEntity
+import com.aroman.gitandroid.domain.entity.UserEntity
 import com.aroman.gitandroid.databinding.FragmentUserListBinding
 import com.aroman.gitandroid.domain.FragmentController
 import com.aroman.gitandroid.ui.userList.recyclerView.UserListAdapter

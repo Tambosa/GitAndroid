@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aroman.gitandroid.R
-import com.aroman.gitandroid.data.mock.UserEntity
+import com.aroman.gitandroid.domain.entity.UserEntity
 import com.aroman.gitandroid.databinding.ItemUserBinding
 
 class UserListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -4,7 +4,7 @@ import android.util.Log
 import com.aroman.gitandroid.data.db.room.UserLocalRepo
 import com.aroman.gitandroid.data.web.github.GitServerResponseData
 import com.aroman.gitandroid.data.web.github.toDbUsers
-import com.aroman.gitandroid.domain.RepositoryUsecase
+import com.aroman.gitandroid.domain.usecase.RepositoryUsecase
 import com.aroman.gitandroid.utils.Publisher
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.subscribeBy

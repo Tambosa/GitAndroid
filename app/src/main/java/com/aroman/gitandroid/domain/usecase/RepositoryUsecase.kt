@@ -1,4 +1,4 @@
-package com.aroman.gitandroid.domain
+package com.aroman.gitandroid.domain.usecase
 
 import com.aroman.gitandroid.data.web.github.GitServerResponseData
 import io.reactivex.rxjava3.core.Single

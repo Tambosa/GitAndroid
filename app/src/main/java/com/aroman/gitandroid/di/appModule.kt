@@ -4,8 +4,8 @@ import com.aroman.gitandroid.data.db.room.UserLocalRepo
 import com.aroman.gitandroid.data.mock.MockUserListRepoImpl
 import com.aroman.gitandroid.data.web.github.GitApi
 import com.aroman.gitandroid.data.web.github.GitRepoRetrofitImpl
-import com.aroman.gitandroid.domain.RepositoryUsecase
-import com.aroman.gitandroid.domain.UsersUsecase
+import com.aroman.gitandroid.domain.usecase.RepositoryUsecase
+import com.aroman.gitandroid.domain.usecase.UsersUsecase
 import com.aroman.gitandroid.ui.userDetails.UserDetailsViewModel
 import com.aroman.gitandroid.ui.userList.UserListViewModel
 import org.koin.core.qualifier.named
