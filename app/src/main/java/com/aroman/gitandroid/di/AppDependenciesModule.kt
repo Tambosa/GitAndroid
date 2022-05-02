@@ -7,8 +7,6 @@ import com.aroman.gitandroid.data.web.github.GitApi
 import com.aroman.gitandroid.data.web.github.GitRepoRetrofitImpl
 import com.aroman.gitandroid.domain.usecase.RepositoryUsecase
 import com.aroman.gitandroid.domain.usecase.UsersUsecase
-import com.aroman.gitandroid.ui.userDetails.UserDetailsViewModel
-import com.aroman.gitandroid.ui.userList.UserListViewModel
 import dagger.Module
 import dagger.Provides
 import retrofit2.Converter
@@ -66,20 +64,5 @@ class AppDependenciesModule(val context: Context) {
     @Singleton
     fun provideUsersUsecase(): UsersUsecase {
         return MockUserListRepoImpl()
-    }
-
-    @Provides
-    @Singleton
-    fun provideUserDetailsViewModel(
-        @Named("web") web: RepositoryUsecase,
-        @Named("local") local: RepositoryUsecase
-    ): UserDetailsViewModel {
-        return UserDetailsViewModel(web, local)
-    }
-
-    @Provides
-    @Singleton
-    fun provideUserListViewModel(usersUsecase: UsersUsecase): UserListViewModel {
-        return UserListViewModel(usersUsecase)
     }
 }

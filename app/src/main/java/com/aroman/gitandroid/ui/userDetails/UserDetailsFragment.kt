@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.DiffUtil
 import com.aroman.gitandroid.app
 import com.aroman.gitandroid.data.web.github.GitServerResponseData
 import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
+import com.aroman.gitandroid.domain.usecase.RepositoryUsecase
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsAdapter
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsDiffUtilCallback
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
+import javax.inject.Named
 
 private const val LOGIN = "login"
 private const val REPO_LIST = "repo_list"
@@ -32,7 +34,12 @@ class UserDetailsFragment : Fragment() {
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
     private val adapter = UserDetailsAdapter()
 
-    @Inject
+    @field:[Inject Named("local")]
+    lateinit var localRepo: RepositoryUsecase
+
+    @field:[Inject Named("web")]
+    lateinit var webRepo: RepositoryUsecase
+
     lateinit var viewModel: UserDetailsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +60,7 @@ class UserDetailsFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         context.app.appDependenciesComponent.injectUserDetailsFragment(this)
+        viewModel = UserDetailsViewModel(webRepo, localRepo)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
