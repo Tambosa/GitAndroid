@@ -1,28 +1,19 @@
 package com.aroman.gitandroid
 
 import android.app.Application
-import android.content.Context
-import androidx.fragment.app.Fragment
-import com.aroman.gitandroid.data.web.github.GitRepoRetrofitImpl
-import com.aroman.gitandroid.data.mock.MockUserListRepoImpl
-import com.aroman.gitandroid.data.db.room.UserLocalRepo
-import com.aroman.gitandroid.domain.RepositoryUsecase
-import com.aroman.gitandroid.domain.UsersUsecase
-import com.aroman.gitandroid.utils.ViewModelStore
+import com.aroman.gitandroid.di.appModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 class App : Application() {
-    val repoListWeb: RepositoryUsecase by lazy { GitRepoRetrofitImpl() }
-    val repoListLocal: RepositoryUsecase by lazy { UserLocalRepo(this) }
-    val userListRepo: UsersUsecase by lazy { MockUserListRepoImpl() }
-    val viewModelStore by lazy { ViewModelStore() }
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidLogger(level = Level.ERROR)
+            androidContext(this@App)
+            modules(appModule)
+        }
+    }
 }
-
-val Context.app: App
-    get() {
-        return applicationContext as App
-    }
-
-val Fragment.app: App
-    get() {
-        return requireActivity().app
-    }

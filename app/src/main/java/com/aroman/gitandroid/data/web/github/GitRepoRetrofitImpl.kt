@@ -1,6 +1,6 @@
 package com.aroman.gitandroid.data.web.github
 
-import com.aroman.gitandroid.domain.RepositoryUsecase
+import com.aroman.gitandroid.domain.usecase.RepositoryUsecase
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory

@@ -5,8 +5,8 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.aroman.gitandroid.databinding.ItemUserDetailsBinding
 import com.aroman.gitandroid.data.web.github.GitServerResponseData
+import com.aroman.gitandroid.databinding.ItemUserDetailsBinding
 
 class UserDetailsViewHolder(private val binding: ItemUserDetailsBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -19,10 +19,10 @@ class UserDetailsViewHolder(private val binding: ItemUserDetailsBinding) :
     }
 
     fun bind(item: GitServerResponseData) {
-        binding.itemGitRepoName.text = Html.fromHtml(
+        binding.itemRepoNameTextView.text = Html.fromHtml(
             "<a href=\"" + item.repoHtmlUrl + "\">" + item.repoName + "</a>",
             Html.FROM_HTML_MODE_LEGACY
         )
-        binding.itemGitRepoName.movementMethod = LinkMovementMethod.getInstance()
+        binding.itemRepoNameTextView.movementMethod = LinkMovementMethod.getInstance()
     }
 }
