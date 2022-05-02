@@ -8,23 +8,27 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.aroman.gitandroid.R
-import com.aroman.gitandroid.domain.entity.UserEntity
+import com.aroman.gitandroid.app
 import com.aroman.gitandroid.databinding.FragmentUserListBinding
 import com.aroman.gitandroid.domain.FragmentController
+import com.aroman.gitandroid.domain.entity.UserEntity
 import com.aroman.gitandroid.ui.userList.recyclerView.UserListAdapter
-import org.koin.android.ext.android.inject
+import javax.inject.Inject
 
 class UserListFragment : Fragment(R.layout.fragment_user_list) {
     private val binding by viewBinding(FragmentUserListBinding::class.java)
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
-    private val viewModel: UserListViewModel by inject()
     private val controller by lazy { activity as FragmentController }
     private val userListAdapter = UserListAdapter {
         controller.openUserDetails(it.userName)
     }
 
+    @Inject
+    lateinit var viewModel: UserListViewModel
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        context.app.appDependenciesComponent.injectUserListFragment(this)
         if (activity !is FragmentController) {
             throw IllegalStateException("Activity должна наследоваться от FragmentController")
         }

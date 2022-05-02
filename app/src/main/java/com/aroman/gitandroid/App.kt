@@ -1,19 +1,23 @@
 package com.aroman.gitandroid
 
 import android.app.Application
-import com.aroman.gitandroid.di.appModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
+import android.content.Context
+import com.aroman.gitandroid.di.AppDependenciesComponent
+import com.aroman.gitandroid.di.AppDependenciesModule
+import com.aroman.gitandroid.di.DaggerAppDependenciesComponent
 
 class App : Application() {
+    lateinit var appDependenciesComponent: AppDependenciesComponent
     override fun onCreate() {
         super.onCreate()
-        startKoin {
-            androidLogger(level = Level.ERROR)
-            androidContext(this@App)
-            modules(appModule)
-        }
+        appDependenciesComponent = DaggerAppDependenciesComponent
+            .builder()
+            .appDependenciesModule(AppDependenciesModule(this))
+            .build()
     }
 }
+
+val Context.app: App
+    get() {
+        return applicationContext as App
+    }

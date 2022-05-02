@@ -11,12 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
+import com.aroman.gitandroid.app
 import com.aroman.gitandroid.data.web.github.GitServerResponseData
 import com.aroman.gitandroid.databinding.FragmentUserDetailsBinding
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsAdapter
 import com.aroman.gitandroid.ui.userDetails.recyclerView.UserDetailsDiffUtilCallback
 import com.squareup.picasso.Picasso
-import org.koin.android.ext.android.inject
+import javax.inject.Inject
 
 private const val LOGIN = "login"
 private const val REPO_LIST = "repo_list"
@@ -30,7 +31,9 @@ class UserDetailsFragment : Fragment() {
     private lateinit var binding: FragmentUserDetailsBinding
     private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
     private val adapter = UserDetailsAdapter()
-    private val viewModel: UserDetailsViewModel by inject()
+
+    @Inject
+    lateinit var viewModel: UserDetailsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +48,11 @@ class UserDetailsFragment : Fragment() {
                 repoList.add(item as GitServerResponseData)
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.app.appDependenciesComponent.injectUserDetailsFragment(this)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
