@@ -1,6 +1,7 @@
 package com.aroman.gitandroid.ui.userDetails
 
 import android.util.Log
+import androidx.lifecycle.ViewModel
 import com.aroman.gitandroid.data.db.room.UserLocalRepo
 import com.aroman.gitandroid.data.web.github.GitServerResponseData
 import com.aroman.gitandroid.data.web.github.toDbUsers
@@ -8,11 +9,13 @@ import com.aroman.gitandroid.domain.usecase.RepositoryUsecase
 import com.aroman.gitandroid.utils.Publisher
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import javax.inject.Inject
+import javax.inject.Named
 
-class UserDetailsViewModel(
-    private val repositoryWeb: RepositoryUsecase,
-    private val repositoryLocal: RepositoryUsecase,
-) : UserDetailsContract.UserDetailsViewModel {
+class UserDetailsViewModel @Inject constructor(
+    @Named("web") private val repositoryWeb: RepositoryUsecase,
+    @Named("local") private val repositoryLocal: RepositoryUsecase,
+) : UserDetailsContract.UserDetailsViewModel, ViewModel() {
 
     override val repos: Publisher<List<GitServerResponseData>> = Publisher()
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
