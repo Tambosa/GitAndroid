@@ -23,9 +23,6 @@ class TestUserDetailsViewModel {
     @Mock
     private lateinit var repositoryLocal: RepositoryUsecase
 
-    @Mock
-    private lateinit var fragment: UserDetailsFragment
-
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
